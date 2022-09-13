@@ -1,0 +1,85 @@
+from django.db import models
+from apps.sip_telefono.models import sip_telefono
+
+class sip_buddies(models.Model):
+    id_sip = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=80, unique=True)
+    type = models.CharField(max_length=6, default='friend')
+    fullcontact = models.CharField(max_length=128, blank=True, null=True)
+    regseconds = models.IntegerField(blank=True, null=True, default=0)
+    ipaddr = models.CharField(max_length=15, blank=True, null=True)
+    musicclass = models.CharField(max_length=90, blank=True, null=True)
+    relaxdtmf = models.CharField(max_length=3, blank=True, null=True)
+    usereqphone = models.CharField(max_length=3, blank=True, null=True)
+    compactheaders = models.CharField(max_length=3, blank=True, null=True)
+    callevents = models.CharField(max_length=3, blank=True, null=True)
+    ignoreregexpire = models.CharField(max_length=3, blank=True, null=True, default='yes')
+    context = models.CharField(max_length=80, blank=True, null=True, default='from-internal')
+    callingpres = models.CharField(max_length=25, blank=True, null=True)
+    deny = models.CharField(max_length=95, blank=True, null=True, default='0.0.0.0/0.0.0.0')
+    permit = models.CharField(max_length=95, blank=True, null=True)
+    secret = models.CharField(max_length=80, blank=True, null=True)
+    md5secret = models.CharField(max_length=80, blank=True, null=True)
+    dtmfmode = models.CharField(max_length=20, blank=True, null=True, default='rfc2833')
+    canreinvite = models.CharField(max_length=3, blank=True, null=True)
+    nat = models.CharField(max_length=20, blank=True, null=True)
+    callgroup = models.CharField(max_length=10, blank=True, null=True)
+    pickupgroup = models.CharField(max_length=10, blank=True, null=True)
+    language = models.CharField(max_length=2, blank=True, null=True)
+    disallow = models.CharField(max_length=100, blank=True, null=True, default='all')
+    allow = models.CharField(max_length=100, blank=True, null=True, default='alaw,ulaw,gsm,g729')
+    insecure = models.CharField(max_length=6, blank=True, null=True)
+    trustrpid = models.CharField(max_length=3, blank=True, null=True)
+    progressinband = models.CharField(max_length=5, blank=True, null=True)
+    promiscredir = models.CharField(max_length=3, blank=True, null=True)
+    useclientcode = models.CharField(max_length=3, blank=True, null=True)
+    accountcode = models.CharField(max_length=20, blank=True, null=True, unique=True)
+    setvar = models.CharField(max_length=100, blank=True, null=True)
+    callerid = models.CharField(max_length=80, blank=True, null=True, unique=True)
+    amaflags = models.CharField(max_length=100, blank=True, null=True)
+    call_limit = models.CharField(db_column='call-limit', max_length=3, blank=True, null=True)
+    restrictcid = models.CharField(max_length=3, blank=True, null=True)
+    allowoverlap = models.CharField(max_length=3, blank=True, null=True)
+    allowsubscribe = models.CharField(max_length=3, blank=True, null=True)
+    subscribecontext = models.CharField(max_length=80, blank=True, null=True)
+    videosupport = models.CharField(max_length=3, blank=True, null=True)
+    maxcallbitrate = models.CharField(max_length=4, blank=True, null=True, default='384')
+    mailbox = models.CharField(max_length=100, blank=True, null=True)
+    username = models.CharField(max_length=80, blank=True, null=True)
+    template = models.CharField(max_length=80, blank=True, null=True)
+    fromdomain = models.CharField(max_length=80, blank=True, null=True)
+    regexten = models.CharField(max_length=80, blank=True, null=True)
+    fromuser = models.CharField(max_length=80, blank=True, null=True)
+    host = models.CharField(max_length=31, blank=True, null=True)
+    port = models.CharField(max_length=5, blank=True, null=True)
+    qualify = models.CharField(max_length=5, blank=True, null=True)
+    defaultip = models.CharField(max_length=15, blank=True, null=True)
+    rtptimeout = models.CharField(max_length=3, blank=True, null=True)
+    rtpholdtimeout = models.CharField(max_length=3, blank=True, null=True)
+    sendrpid = models.CharField(max_length=3, blank=True, null=True)
+    regserver = models.CharField(max_length=100, blank=True, null=True)
+    usecallingpres = models.CharField(max_length=3, blank=True, null=True)
+    uso = models.IntegerField(blank=True, null=True)
+    lastms = models.CharField(max_length=80, blank=True, null=True)
+    allow_codec_video = models.CharField(max_length=16, blank=True, null=True, default='h264')
+    no_transport = models.CharField(max_length=10, blank=True, null=True)
+    no_ecryption = models.CharField(max_length=10, blank=True, null=True)
+    grabacion = models.CharField(max_length=20, blank=True, null=True)
+    tls_srtp = models.IntegerField(blank=True, null=True)
+    openvpn = models.IntegerField(blank=True, null=True)
+    vlan = models.IntegerField(blank=True, null=True)
+    num_vlan = models.IntegerField(blank=True, null=True)
+    ip_check = models.IntegerField(blank=True, null=True)
+    telefono = models.ForeignKey(sip_telefono, on_delete=models.CASCADE, 
+                                blank=True, null=True,related_name="telefono")
+    
+    class Meta:
+        db_table = "sip"
+        verbose_name = 'Anexo'
+        verbose_name_plural = 'Anexos'
+
+    def __str__(self):
+        return f'{self.name} / {self.callerid} / {self.context}'
+
+
+
