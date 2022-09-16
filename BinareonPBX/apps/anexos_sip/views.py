@@ -14,9 +14,24 @@ from rest_framework import status
 @api_view(['GET','POST'])
 def telefono_api_view(request):
     if request.method == 'GET':
-        telfono_sip = sip_telefono.objects.all()
-        telfono_sip = SipTelefonoSerializer(telfono_sip,many=True)
-        return Response(telfono_sip.data, status=status.HTTP_200_OK) 
+        telfono_sip = sip_buddies.objects.all()
+        anexo_serializer = AnexoListarSerializer(telfono_sip,many=True)
+        return Response(anexo_serializer.data, status=status.HTTP_200_OK) 
+    elif request.method == 'POST':
+        anexo_serializer = AnexoListarSerializer(data=request.data)
+        if anexo_serializer.is_valid():
+            anexo_serializer.save()            
+            return Response({
+                'isCreated':True,
+                'message':'Registro creado satisfactoriamente',
+                'data':anexo_serializer.data
+            },status=status.HTTP_201_CREATED)
+        return Response({
+                'isCreated':False,
+                'status': status.HTTP_400_BAD_REQUEST,
+                'message':"Este registro ya existe",
+                'data':anexo_serializer.errors
+            })
 
 #REGISTRO DE ANEXOS
 @api_view(['GET','POST'])

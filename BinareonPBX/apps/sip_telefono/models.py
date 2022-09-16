@@ -17,7 +17,7 @@ class marca_telefono(models.Model):
         verbose_name_plural = 'Marcas'
     
     def __str__(self):
-        return f'{self.id_marca_telefono} / {self.no_marca_telefono} '
+        return f'{self.no_marca_telefono} '
 
 class modelo_telefono(models.Model):
     id_modelo_telefono = models.AutoField(primary_key=True)
@@ -32,7 +32,7 @@ class modelo_telefono(models.Model):
         verbose_name_plural = 'Modelo'
 
     def __str__(self):
-        return f'{self.id_modelo_telefono} / {self.no_modelo_telefono} '
+        return f' {self.no_modelo_telefono} '
 
 class sip_telefono(models.Model):
     id_sip_telefono = models.AutoField(primary_key=True)
@@ -50,4 +50,5 @@ class sip_telefono(models.Model):
         verbose_name_plural = 'Telefonos'
 
     def __str__(self):
-        return f'{self.id_sip_telefono} / {self.id_usuario_sip} '
+        return f'{self.id_marca_telefono} / {self.id_modelo_telefono} / {self.no_mac}'
+
