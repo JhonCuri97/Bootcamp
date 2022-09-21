@@ -5,7 +5,8 @@ from apps.anexos_sip.views import (
     anexo_detail_view,
     anexo_eliminar_view,
     telefono_api_view,
-
+    sip_telefono_api_view,
+    sip_detail_view,
     )
 
 urlpatterns = [
@@ -16,6 +17,7 @@ urlpatterns = [
     path('lista/<int:pk>/', anexo_detail_view, name='Detalle'),
     path('eliminar/<int:pk>/', anexo_eliminar_view, name = 'Eliminar'),
     path('telefono', telefono_api_view, name = 'telefono'),
-
+    path('sip/', sip_telefono_api_view, name = 'telefono'),
+    path('sip/<int:pk>/', sip_detail_view, name='3tyr'),
 
 ]

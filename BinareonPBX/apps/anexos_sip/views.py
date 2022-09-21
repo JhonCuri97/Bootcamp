@@ -10,6 +10,57 @@ from apps.anexos_sip.models import sip_buddies
 from apps.sip_telefono.models import sip_telefono
 from rest_framework import status
 
+#NRO MAC
+@api_view(['GET','POST'])
+def sip_telefono_api_view(request):
+    if request.method == 'GET':
+        telfono_sip = sip_telefono.objects.all()
+        anexo_serializer = SipTelefonoSerializer(telfono_sip,many=True)
+        return Response(anexo_serializer.data, status=status.HTTP_200_OK) 
+    elif request.method == 'POST':
+        anexo_serializer = SipTelefonoSerializer(data=request.data)
+        if anexo_serializer.is_valid():
+            anexo_serializer.save()            
+            return Response({
+                'isCreated':True,
+                'message':'Registro creado satisfactoriamente',
+                'data':anexo_serializer.data
+            },status=status.HTTP_201_CREATED)
+        return Response({
+                'isCreated':False,
+                'status': status.HTTP_400_BAD_REQUEST,
+                'message':"Este registro ya existe",
+                'data':anexo_serializer.errors
+            })
+
+@api_view(['GET','PUT','DELETE'])
+def sip_detail_view(request,pk=None):
+    anexo = sip_telefono.objects.filter(id_sip_telefono=pk).first()    
+    if anexo:
+        if request.method == 'GET':
+            anexo_serializer = SipTelefonoSerializer(anexo)
+            return Response(anexo_serializer.data,status=status.HTTP_200_OK)
+        elif request.method == 'PUT':
+            anexo_serializer = SipTelefonoSerializer(anexo,data = request.data)
+            if anexo_serializer.is_valid():
+                anexo_serializer.save()
+                return Response({
+                    'isCreated': True,
+                    'message': "El registro se ha actualizado de manera correcta",
+                    'data':anexo_serializer.data
+                    },status.HTTP_200_OK)
+            return Response({
+                'isCreated':False,
+                'status': status.HTTP_400_BAD_REQUEST,
+                'message':"Error al actualizar",
+                'data':anexo_serializer.errors
+            }) 
+
+        elif request.method == 'DELETE':
+            anexo.delete()
+            return Response('Registro eliminado')  
+
+
 #ejemplo
 @api_view(['GET','POST'])
 def telefono_api_view(request):

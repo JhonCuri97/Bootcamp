@@ -50,5 +50,5 @@ class sip_telefono(models.Model):
         verbose_name_plural = 'Telefonos'
 
     def __str__(self):
-        return f'{self.id_marca_telefono} / {self.id_modelo_telefono} / {self.no_mac}'
+        return f'{self.id_sip_telefono} /{self.id_marca_telefono} / {self.id_modelo_telefono} / {self.no_mac}'
 
