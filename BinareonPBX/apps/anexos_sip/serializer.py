@@ -3,8 +3,8 @@ from apps.anexos_sip.models import sip_buddies
 from apps.sip_telefono.models import sip_telefono
 
 class SipTelefonoSerializer(serializers.ModelSerializer):
-    id_marca_telefono = serializers.CharField(source ='id_marca_telefono.no_marca_telefono')
-    id_modelo_telefono = serializers.CharField(source ='id_modelo_telefono.no_modelo_telefono')
+    #id_marca_telefono = serializers.CharField(source ='id_marca_telefono.no_marca_telefono')
+    #id_modelo_telefono = serializers.CharField(source ='id_modelo_telefono.no_modelo_telefono')
     class Meta:
         model = sip_telefono
         fields = ('id_marca_telefono','id_modelo_telefono','no_mac')
@@ -68,7 +68,7 @@ class AnexoRegistrarSerializer(serializers.ModelSerializer):
         sip = sip_buddies.objects.create(**validated_data, telefono=telefono)         
         return sip   
 
-    """
+    
     def update(self,instance,validated_data):
         
         instance.name = validated_data.get('name',instance.name)
@@ -93,4 +93,4 @@ class AnexoRegistrarSerializer(serializers.ModelSerializer):
         tel.no_mac = telefono_data.get('no_mac',tel.no_mac)
         tel.save()
         return instance 
-        """
+        
