@@ -61,7 +61,7 @@ def sip_detail_view(request,pk=None):
             return Response('Registro eliminado')  
 
 
-#ejemplo
+#ANEXO / TELEFONO
 @api_view(['GET','POST'])
 def telefono_api_view(request):
     if request.method == 'GET':
@@ -84,7 +84,7 @@ def telefono_api_view(request):
                 'data':anexo_serializer.errors
             })
 
-#REGISTRO DE ANEXOS
+#ANEXO/LISTA
 @api_view(['GET','POST'])
 def registro_api_view(request):
     if request.method == 'GET':
@@ -107,6 +107,7 @@ def registro_api_view(request):
                 'data':anexo_serializer.errors
             })
 
+"""
 #LISTADO DE ANEXOS
 @api_view(['GET','POST'])
 def anexo_api_view(request):
@@ -114,7 +115,7 @@ def anexo_api_view(request):
         anexo_listar = sip_buddies.objects.all()
         anexo_serializer = AnexoRegistrarSerializer(anexo_listar,many=True)
         return Response(anexo_serializer.data, status=status.HTTP_200_OK)
-
+"""
 
 @api_view(['GET','PUT','DELETE'])
 def anexo_detail_view(request,pk=None):

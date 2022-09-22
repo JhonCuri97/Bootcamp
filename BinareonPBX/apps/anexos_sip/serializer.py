@@ -3,8 +3,8 @@ from apps.anexos_sip.models import sip_buddies
 from apps.sip_telefono.models import sip_telefono
 
 class SipTelefonoSerializer(serializers.ModelSerializer):
-    #id_marca_telefono = serializers.CharField(source ='id_marca_telefono.no_marca_telefono')
-    #id_modelo_telefono = serializers.CharField(source ='id_modelo_telefono.no_modelo_telefono')
+    id_marca_telefono = serializers.CharField(source ='id_marca_telefono.no_marca_telefono')
+    id_modelo_telefono = serializers.CharField(source ='id_modelo_telefono.no_modelo_telefono')
     class Meta:
         model = sip_telefono
         fields = ('id_marca_telefono','id_modelo_telefono','no_mac')
@@ -20,7 +20,7 @@ class SipTelefonoSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
     
-#Listar anexos
+#ANEXO/TELEFONO
 class AnexoListarSerializer(serializers.ModelSerializer):
     telefono = SipTelefonoSerializer(required=False)
 
@@ -30,9 +30,8 @@ class AnexoListarSerializer(serializers.ModelSerializer):
 
     def create(self,validated_data):
         telefono_data = validated_data.pop('telefono')
-        sip = sip_buddies.objects.create(**validated_data)
-        for tel in telefono_data:
-            sip_telefono.objects.create(telefono=sip, **tel)    
+        telefono = sip_telefono.objects.create(**telefono_data)
+        sip = sip_buddies.objects.create(**validated_data, telefono=telefono)         
         return sip
 
     def update(self,instance,validated_data):
@@ -49,7 +48,7 @@ class AnexoListarSerializer(serializers.ModelSerializer):
         tel.save()
         return instance 
 
-
+#ANEXO/LISTA
 class AnexoRegistrarSerializer(serializers.ModelSerializer):
     telefono = SipTelefonoSerializer(required=False)
     class Meta:
@@ -64,9 +63,12 @@ class AnexoRegistrarSerializer(serializers.ModelSerializer):
         )
 
     def create(self,validated_data):
-        nuevo_sip = sip_buddies.objects.create(**validated_data)
-        return nuevo_sip    
-    
+        telefono_data = validated_data.pop('telefono')
+        telefono = sip_telefono.objects.create(**telefono_data)
+        sip = sip_buddies.objects.create(**validated_data, telefono=telefono)         
+        return sip   
+
+    """
     def update(self,instance,validated_data):
         
         instance.name = validated_data.get('name',instance.name)
@@ -91,13 +93,4 @@ class AnexoRegistrarSerializer(serializers.ModelSerializer):
         tel.no_mac = telefono_data.get('no_mac',tel.no_mac)
         tel.save()
         return instance 
-
-        """
-        sip = sip_buddies.objects.create(
-            name = validated_data['name'],
-            callerid = validated_data['callerid'],
-            context = validated_data['context']
-        )
-        for telefon in telefono_data:
-            sip_telefono.objects.create(**telefono_data, sip=sip)
         """

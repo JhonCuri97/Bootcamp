@@ -1,5 +1,5 @@
 from django.db import models
-
+#from apps.anexos_sip.models import sip_buddies
 # Create your models here.
 
 class marca_telefono(models.Model):
@@ -42,6 +42,7 @@ class sip_telefono(models.Model):
     no_mac = models.CharField(max_length=100, blank=True, null=True,)
     no_ip_dominio = models.CharField(max_length=50, blank=True, null=True,)
     no_ruta = models.CharField(max_length=200, blank=True, null=True,)
+    #telefono = models.ForeignKey(sip_buddies, on_delete=models.CASCADE, blank=True, null=True,related_name="telefono")
 
     class Meta:
         db_table = "tb_sip_telefono"
