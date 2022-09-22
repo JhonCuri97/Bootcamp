@@ -48,7 +48,7 @@ class AnexoListarSerializer(serializers.ModelSerializer):
         tel.save()
         return instance 
 
-#ANEXO/LISTA
+#ANEXO/REGISTRO
 class AnexoRegistrarSerializer(serializers.ModelSerializer):
     telefono = SipTelefonoSerializer(required=False)
     class Meta:

@@ -84,7 +84,7 @@ def telefono_api_view(request):
                 'data':anexo_serializer.errors
             })
 
-#ANEXO/LISTA
+#ANEXO/REGISTRO
 @api_view(['GET','POST'])
 def registro_api_view(request):
     if request.method == 'GET':
